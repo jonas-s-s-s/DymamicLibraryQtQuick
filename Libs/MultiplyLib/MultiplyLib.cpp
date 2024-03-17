@@ -1,4 +1,7 @@
 #include "MultiplyLib.h"
+#include "qevent.h"
+#include <QFile>
+#include <QDirIterator>
 
 #if defined(__linux__) || defined(__APPLE__)
 extern "C"
@@ -38,9 +41,11 @@ void MultiplyLib::performComputation(int num)
     emit dataUpdated(_data);
 }
 
-std::string MultiplyLib::getQML() {
-    // Could be loaded from filesystem instead
-    return "import QtQuick \n Text { property var multiplyLib \n Component.onCompleted: {multiplyLib.dataUpdated.connect(function(data) {resultDisplay.text = data})} id: resultDisplay\n text: \"No input data.\" }";
+QByteArray MultiplyLib::getQML() {
+    QFile file(":/MultiplyLib/resources/panel.qml");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return QByteArray();
+    return file.readAll();
 }
 
 

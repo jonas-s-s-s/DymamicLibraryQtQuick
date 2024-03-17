@@ -13,5 +13,5 @@ public:
 
     virtual void performComputation(int num) = 0;
 
-    virtual std::string getQML() = 0;
+    virtual QByteArray getQML() = 0;
 };

@@ -17,6 +17,9 @@ Controller::Controller(QObject *parent)
 
 void Controller::showLibraryQml(int index)
 {
+    QQmlEngine *engine = qmlEngine(this);
+    QQmlComponent component(engine);
+
     std::string libName;
     if(index == 0) {
         libName = "libMultiplyLib";
@@ -25,16 +28,11 @@ void Controller::showLibraryQml(int index)
         dll_loader->openLib();
         lib_object = dll_loader->getInstance();
 
-        std::string QML = lib_object->getQML();
-
-        QQmlEngine *engine = qmlEngine(this);
-        QQmlComponent component(engine);
-        component.setData(QML.c_str(), QUrl());
+        component.setData(lib_object->getQML(), QUrl());
 
         QQuickItem *item = qobject_cast<QQuickItem*>(component.createWithInitialProperties(QVariantMap{{lib_object->propertyName().c_str(), QVariant::fromValue(lib_object.get())}}));
 
         emit qmlLoaded(item);
-
     } else {
         libName = "libDivideLib";
 
@@ -42,17 +40,12 @@ void Controller::showLibraryQml(int index)
         dll_loader2->openLib();
         lib_object2 = dll_loader2->getInstance();
 
-        std::string QML = lib_object2->getQML();
-
-        QQmlEngine *engine = qmlEngine(this);
-        QQmlComponent component(engine);
-        component.setData(QML.c_str(), QUrl());
+        component.setData(lib_object2->getQML(), QUrl());
 
         QQuickItem *item = qobject_cast<QQuickItem*>(component.createWithInitialProperties(QVariantMap{{lib_object2->propertyName().c_str(), QVariant::fromValue(lib_object2.get())}}));
 
         emit qmlLoaded(item);
     }
-
 
 }
 
@@ -63,6 +56,4 @@ void Controller::clickUpdate(int num)
 
     if(lib_object2)
         lib_object2->performComputation(num);
-
-
 }

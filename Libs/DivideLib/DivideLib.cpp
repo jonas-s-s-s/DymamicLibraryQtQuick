@@ -1,4 +1,5 @@
 #include "DivideLib.h"
+#include <QFile>
 
 #if defined(__linux__) || defined(__APPLE__)
 extern "C"
@@ -41,9 +42,11 @@ void DivideLib::performComputation(int num)
     emit dataUpdated(_data);
 }
 
-std::string DivideLib::getQML() {
-    // Could be loaded from filesystem instead
-    return "import QtQuick \n Text {property var divideLib \n Component.onCompleted: {divideLib.dataUpdated.connect(function(data) {resultDisplay.text = data})} id: resultDisplay\n text: \"No input data.\" }";
+QByteArray DivideLib::getQML() {
+    QFile file(":/DivideLib/resources/panel.qml");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return QByteArray();
+    return file.readAll();
 }
 
 

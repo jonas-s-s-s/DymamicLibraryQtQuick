@@ -15,7 +15,7 @@ public:
 
     void performComputation(int num) override;
 
-    std::string getQML() override;
+    QByteArray getQML() override;
 
 signals:
     void dataUpdated(int data);

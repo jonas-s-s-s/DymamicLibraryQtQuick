@@ -11,11 +11,11 @@ public:
      MultiplyLib() = default;
     ~MultiplyLib() = default;
 
-     std::string propertyName() override;
+    std::string propertyName() override;
 
     void performComputation(int num) override;
 
-    std::string getQML() override;
+    QByteArray getQML() override;
 
 signals:
     void dataUpdated(int data);
