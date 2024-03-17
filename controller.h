@@ -18,6 +18,9 @@ public:
     std::unique_ptr<LibLoader<ExampleApi>> dll_loader;
     std::shared_ptr<ExampleApi> lib_object;
 
+    std::unique_ptr<LibLoader<ExampleApi>> dll_loader2;
+    std::shared_ptr<ExampleApi> lib_object2;
+
     explicit Controller(QObject *parent = nullptr);
 
 public slots:
