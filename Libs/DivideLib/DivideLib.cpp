@@ -1,33 +1,23 @@
 #include "DivideLib.h"
 #include <QFile>
 
-#if defined(__linux__) || defined(__APPLE__)
-extern "C"
-{
-DivideLib *allocator()
-{
-    return new DivideLib();
-}
-
-void deleter(DivideLib *ptr)
-{
-    delete ptr;
-}
-}
-#endif
-
 #ifdef WIN32
+#define DLLEXPORT __declspec(dllexport)
+#else
+#define DLLEXPORT
+#endif
+
 extern "C"
 {
-__declspec (dllexport) DivideLib *allocator() {
-    return new DivideLib();
+    DLLEXPORT DivideLib *allocator() {
+        return new DivideLib();
+    }
+
+    DLLEXPORT void deleter(DivideLib *ptr) {
+        delete ptr;
+    }
 }
 
-__declspec (dllexport) void deleter(DivideLib *ptr) {
-    delete ptr;
-}
-}
-#endif
 
 std::string DivideLib::propertyName() {
     return "divideLib";

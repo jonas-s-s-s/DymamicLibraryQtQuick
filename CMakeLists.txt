@@ -28,6 +28,7 @@ qt_add_qml_module(appDymamicLibraryQtQuick
     SOURCES LibLoader/LibLoader.h
     SOURCES controller.cpp
     SOURCES controller.h
+    SOURCES LibLoader/defines.h
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

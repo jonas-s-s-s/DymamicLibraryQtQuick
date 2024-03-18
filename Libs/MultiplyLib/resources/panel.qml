@@ -1,21 +1,21 @@
 import QtQuick
 Item {
-    property var multiplyLib
-
     anchors.fill: parent
+
+    // POINTER TO C++ OBJECT CONTAINING SIGNALS (initialized on construction)
+    property var multiplyLib
+    Connections {
+        target: multiplyLib
+        // CONNECT TO C++ SIGNALS HERE
+        function onDataUpdated(data) {resultDisplay.text = data}
+    }
 
     Column {
         spacing: 10
         Text {
-
-            Component.onCompleted: {
-                multiplyLib.dataUpdated.connect(function(data) {resultDisplay.text = data})
-            }
-
             id: resultDisplay
             color: "red"
             text: "No input data."
-
         }
 
         Image {

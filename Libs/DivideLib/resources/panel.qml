@@ -4,18 +4,17 @@ Item {
 
     anchors.fill: parent
 
+    Connections {
+        target: divideLib
+        function onDataUpdated(data) {resultDisplay.text = data}
+    }
+
     Column {
         spacing: 10
         Text {
-
-            Component.onCompleted: {
-                divideLib.dataUpdated.connect(function(data) {resultDisplay.text = data})
-            }
-
             id: resultDisplay
             color: "blue"
             text: "No input data."
-
         }
 
         Image {
